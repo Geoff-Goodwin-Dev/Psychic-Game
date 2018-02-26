@@ -12,72 +12,94 @@
 
 <!--===========================Page Display Section===============================-->
 
-    <!--<div id="game">-->
-      <!--<p>You chose: <span id="userChoice"></span></p>-->
-      <!--<p>Computer chose: <span id="computerChoice"></span></p>-->
-      <!--<p>Wins: <span id="winCount">0</span></p>-->
-      <!--<p>Losses: <span id="lossCount">0</span></p>-->
-      <!--<p>Ties: <span id="tieCount">0</span></p>-->
-      <!---->
-    <!--</div>-->
+    <div id="gameBody">
+      <h1>The Psychic Game</h1>
+      <h2>Guess what letter of which I'm thinking...</h2>
+      <p>Wins: <span id="wins"></span></p>
+      <p>Losses: <span id="losses"></span></p>
+      <p>Guesses Left: <span id="guessDownCounter"></span></p>
+      <p>Your Guesses So Far: <span id="guessArray"></span></p>
+    </div>
 
 <!--===========================Script Section - Variables Declaration===============================-->
 
-  <!--<script type="text/javascript">-->
-    <!--var choices = ["r", "p", "s"];-->
-    <!--var wins = 0;-->
-    <!--var losses = 0;-->
-    <!--var ties = 0;-->
+  <script type="text/javascript">
+    const alpha = "abcdefghijklmnopqrstuvwxyz";
+    var wins = 0;
+    var losses = 0;
+    var guessDownCounter = 10;
+    var guessArray = [];
+
+    //======================================Functional Scripts Section==========================================
+
+    var computerGuess = alpha.charAt(Math.floor(Math.random() * alpha.length));
+
+    function alphaChecker(x) {
+      x = x.toLowerCase();
+      if(alpha.indexOf(x) === -1) {
+        console.log(x, 'is not a letter');
+        return false;
+      }
+      else {
+        console.log('You chose', x);
+        return true;
+      }
+    }
+
+    function updateDisplayStats() {
+      document.getElementById('wins').innerHTML = wins;
+      document.getElementById('losses').innerHTML = losses;
+      document.getElementById('guessDownCounter').innerHTML = guessDownCounter;
+      document.getElementById('guessArray').innerHTML = guessArray;
+    }
+
+    function newGame() {
+      updateDisplayStats();
+      newRound();
+    }
+
+    function newRound() {
+      guessDownCounter = 10;
+      guessArray = [];
+      updateDisplayStats();
+      computerGuess = alpha.charAt(Math.floor(Math.random() * alpha.length));
+      newTurn();
+    }
+
+    function newTurn() {
+      document.onkeyup = function(pressed) {
+      var userGuess = pressed.key;
+      if (alphaChecker(userGuess) === true) {
+        guessDownCounter--;
+        // WIN CONDITION
+        if (userGuess === computerGuess) {
+          wins++;
+          console.log('wins updated to', wins);
+          document.getElementById('wins').innerHTML = wins;
+          newRound();
+        }
+        else {
+
+          console.log(guessDownCounter);
+          guessArray.push(userGuess);
+          console.log(guessArray);
+
+        }
+      }
 
 
-    <!--//======================================Functional Scripts Section==========================================-->
+        document.getElementById('guessDownCounter').innerHTML = guessDownCounter;
+        document.getElementById('guessArray').innerHTML = guessArray;
+      }
+    }
 
-    <!--document.onkeyup = function(pressed) {-->
-      <!--var userGuess = pressed.key;-->
 
-      <!--if (choices.includes(userGuess) === true) {-->
-        <!--var computerGuess = choices[Math.floor(Math.random() * choices.length)];-->
-        <!--document.getElementById('userChoice').innerHTML = userGuess;-->
-        <!--document.getElementById('computerChoice').innerHTML = computerGuess;-->
 
-        <!--var result = (userGuess + computerGuess);-->
 
-        <!--switch (result) {-->
 
-          <!--// TIE CONDITIONS-->
-          <!--case "rr":-->
-          <!--case "pp":-->
-          <!--case "ss":-->
-            <!--ties ++;-->
-            <!--document.getElementById('tieCount').innerHTML = ties;-->
-            <!--break;-->
 
-          <!--// LOSS CONDITIONS-->
-          <!--case "rp":-->
-          <!--case "ps":-->
-          <!--case "sr":-->
-            <!--losses ++;-->
-            <!--document.getElementById('lossCount').innerHTML = losses;-->
-            <!--break;-->
 
-          <!--// WIN CONDITIONS-->
-          <!--case "pr":-->
-          <!--case "sp":-->
-          <!--case "rs":-->
-            <!--wins ++;-->
-            <!--document.getElementById('winCount').innerHTML = wins;-->
-            <!--break;-->
-
-          <!--default:-->
-            <!--console.log("what happened?!?!?!?!?");-->
-        <!--}-->
-      <!--}-->
-      <!--else {-->
-        <!--alert("only R, P, or S can be selected")-->
-      <!--}-->
-    <!--};-->
-
-  <!--</script>-->
+  </script>
 
   </body>
 </html>

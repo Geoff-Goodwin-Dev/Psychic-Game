@@ -77,6 +77,7 @@ Not Applicable: This is a static website for educational purposes and therefore 
 ## Versioning
 
 * version 1.0 - Initialization of Readme, file structure and placeholder HTML file
+* version 2.0 - Updates to Index.html for game structure and initial variable declaration and function creation
 
 ## Authors
 
