@@ -1,105 +1,29 @@
 <!doctype html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Hangman Game</title>
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Psychic Game - Guess the Computer-selected Letter!</title>
+  <script type="text/javascript" src="assets/gameplay.js"></script>
 
-  <body>
+</head>
 
-<!--===========================Page Display Section===============================-->
+<body>
 
-    <div id="gameBody">
-      <h1>The Psychic Game</h1>
-      <h2>Guess what letter of which I'm thinking...</h2>
-      <p>Wins: <span id="wins"></span></p>
-      <p>Losses: <span id="losses"></span></p>
-      <p>Guesses Left: <span id="guessDownCounter"></span></p>
-      <p>Your Guesses So Far: <span id="guessArray"></span></p>
-    </div>
+<div id="gameBody">
+  <h1>The Psychic Game</h1>
+  <h2>Guess the letter of which I'm thinking...</h2>
+  <p>Press the Start button to begin</p>
+  <p>Wins: <span id="wins"></span></p>
+  <p>Losses: <span id="losses"></span></p>
+  <p>Guesses Left: <span id="guessDownCounter"></span></p>
+  <p>Your Guesses So Far: <span id="guessArray"></span></p>
+</div>
 
-<!--===========================Script Section - Variables Declaration===============================-->
+<button id="start" onclick=newGame()>Start</button>
+<button id="reset" disabled onclick=reset()>Reset</button>
 
-  <script type="text/javascript">
-    const alpha = "abcdefghijklmnopqrstuvwxyz";
-    var wins = 0;
-    var losses = 0;
-    var guessDownCounter = 10;
-    var guessArray = [];
-
-    //======================================Functional Scripts Section==========================================
-
-    var computerGuess = alpha.charAt(Math.floor(Math.random() * alpha.length));
-
-    function alphaChecker(x) {
-      x = x.toLowerCase();
-      if(alpha.indexOf(x) === -1) {
-        console.log(x, 'is not a letter');
-        return false;
-      }
-      else {
-        console.log('You chose', x);
-        return true;
-      }
-    }
-
-    function updateDisplayStats() {
-      document.getElementById('wins').innerHTML = wins;
-      document.getElementById('losses').innerHTML = losses;
-      document.getElementById('guessDownCounter').innerHTML = guessDownCounter;
-      document.getElementById('guessArray').innerHTML = guessArray;
-    }
-
-    function newGame() {
-      updateDisplayStats();
-      newRound();
-    }
-
-    function newRound() {
-      guessDownCounter = 10;
-      guessArray = [];
-      updateDisplayStats();
-      computerGuess = alpha.charAt(Math.floor(Math.random() * alpha.length));
-      newTurn();
-    }
-
-    function newTurn() {
-      document.onkeyup = function(pressed) {
-      var userGuess = pressed.key;
-      if (alphaChecker(userGuess) === true) {
-        guessDownCounter--;
-        // WIN CONDITION
-        if (userGuess === computerGuess) {
-          wins++;
-          console.log('wins updated to', wins);
-          document.getElementById('wins').innerHTML = wins;
-          newRound();
-        }
-        else {
-
-          console.log(guessDownCounter);
-          guessArray.push(userGuess);
-          console.log(guessArray);
-
-        }
-      }
-
-
-        document.getElementById('guessDownCounter').innerHTML = guessDownCounter;
-        document.getElementById('guessArray').innerHTML = guessArray;
-      }
-    }
-
-
-
-
-
-
-
-  </script>
-
-  </body>
+</body>
 </html>
